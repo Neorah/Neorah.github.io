@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="关于Tomcat的一小点知识"><meta name="keywords" content="Java Servlet,Apache Tomcat,JSP,WAR"><meta name="author" content="Neorah"><meta name="copyright" content="Neorah"><title>关于Tomcat的一小点知识 | Neorah's Blog</title><link rel="shortcut icon" href="/img/melody-favicon32.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00-引言"><span class="toc-number">1.</span> <span class="toc-text">0x00 引言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01-Web-Application"><span class="toc-number">2.</span> <span class="toc-text">0x01 Web Application</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02-Java-Servlet"><span class="toc-number">3.</span> <span class="toc-text">0x02 Java Servlet</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03-Apache-Tomcat"><span class="toc-number">4.</span> <span class="toc-text">0x03 Apache Tomcat</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简介"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么会使用Servlet容器？"><span class="toc-number">4.0.0.2.</span> <span class="toc-text">为什么会使用Servlet容器？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工作流程"><span class="toc-number">4.0.0.3.</span> <span class="toc-text">工作流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web-xml"><span class="toc-number">4.0.0.4.</span> <span class="toc-text">web.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#管理界面"><span class="toc-number">4.0.0.5.</span> <span class="toc-text">管理界面</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x04-JSP"><span class="toc-number">5.</span> <span class="toc-text">0x04 JSP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x05-WAR包"><span class="toc-number">6.</span> <span class="toc-text">0x05 WAR包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x06-总结"><span class="toc-number">7.</span> <span class="toc-text">0x06 总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/neorah.jpg"></div><div class="author-info__name text-center">Neorah</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/Neorah" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">15</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tag</span><span class="pull-right">21</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Category</span><span class="pull-right">29</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/top.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Neorah's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Posts</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">关于Tomcat的一小点知识</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-27</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/web%E5%BC%80%E5%8F%91/">web开发</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/web%E5%BC%80%E5%8F%91/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF/">服务器端</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">2k</span><span class="post-meta__separator">|</span><span>阅读时长: 6 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="0x00-引言"><a href="#0x00-引言" class="headerlink" title="0x00 引言"></a>0x00 引言</h1><p>在做WUSTCTF2020的时候，有两道题都是跟Tomcat有关的，质量很高的那道<code>Train Yourself To Be Godly</code>就是关于Tomcat部署war包的，但我对这个不太了解，所以今天借助一些文章来学习了下，并记录下来。</p>
+<h1 id="0x01-Web-Application"><a href="#0x01-Web-Application" class="headerlink" title="0x01 Web Application"></a>0x01 Web Application</h1><p>这个wiki上介绍得很详细，这种架构我还是懂的，所以就贴个<a href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F" target="_blank" rel="noopener">链接</a>好了。</p>
+<h1 id="0x02-Java-Servlet"><a href="#0x02-Java-Servlet" class="headerlink" title="0x02 Java Servlet"></a>0x02 Java Servlet</h1><p>全称是Server Applet。它是用java编写的服务器端程序，运行在服务器端，由Servlet容器所管理，用于生成动态的内容。</p>
+<blockquote>
+<p>狭义的Servlet是指Java语言实现的一个<a href="https://zh.wikipedia.org/wiki/接口" target="_blank" rel="noopener">接口</a>，广义的Servlet是指任何实现了这个Servlet接口的<a href="https://zh.wikipedia.org/wiki/类_(计算机科学)" target="_blank" rel="noopener">类</a>，一般情况下，人们将Servlet理解为后者。</p>
+</blockquote>
+<p>Servlet是平台独立的Java类，编写一个Servlet，实际上就是按照Servlet规范编写一个Java类。而Servlet的规范就是：所有实现servlet的类，都需要实现它那五个方法</p>
+<ul>
+<li><code>init()</code> 初始化</li>
+<li><code>service()</code>  处理客户端的请求</li>
+<li><code>destroy()</code>  释放资源</li>
+<li><code>getServletConfig()</code></li>
+<li><code>getServletInfo()</code></li>
+</ul>
+<p>其中最主要的是两个生命周期方法 init()和destroy()，还有一个处理请求的service()。</p>
+<p>既然servlet只是个服务器端程序，因此它的作用非常简单，它只是个Java接口，并不直接与客户端打交道，与各种协议也没有关系。与客户端打交道的是Servlet容器，Servlet容器是Web服务器或应用程序服务器的一部分，用于在发送的请求和响应之上提供网络服务。Web服务器在接受到用户的请求后，先将请求交给Servlet容器，再由Servlet容器实例化Servlet，调用Servlet的一个特定方法对请求进行处理， 并产生一个响应。这个响应由Servlet容器返回给Web服务器，Web服务器包装这个响应，以HTTP响应的形式发送给Web浏览器。而接下来要介绍的就是一种非常常用的Servlet容器。</p>
+<h1 id="0x03-Apache-Tomcat"><a href="#0x03-Apache-Tomcat" class="headerlink" title="0x03 Apache Tomcat"></a>0x03 Apache Tomcat</h1><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p><strong>Tomcat</strong>是由Apache软件基金会属下的项目开发的Servlet容器，提供了一个Jasper编译器用以将JSP编译成对应的Servlet。</p>
+<p>Tomcat的Servlet引擎通常与Apache或者其他Web服务器一起工作。除了用于开发过程中的调试以及那些对速度和事务处理只有很小要求的用户，很少会将Tomcat单独作为Web服务器。但随着版本的更新，正有越来越多的用户将其单独作为Web服务器用以那些对速度和可靠性有较高要求的环境中。</p>
+<blockquote>
+<p>Tomcat和IIS、Apache等Web服务器一样，具有处理HTML页面的功能，另外它还是一个Servlet和JSP容器，独立的 Servlet容器是Tomcat的默认模式。不过，Tomcat处理静态HTML的能力不如Apache，我们可以将Apache和Tomcat集成在 一起使用，Apache作为HTTP Web服务器，Tomcat作为Web容器。</p>
+</blockquote>
+<h4 id="为什么会使用Servlet容器？"><a href="#为什么会使用Servlet容器？" class="headerlink" title="为什么会使用Servlet容器？"></a>为什么会使用Servlet容器？</h4><ul>
+<li>通信支持：利用容器提供的方法，你能轻松的让servlet与web服务器对话，而不用自己建立serversocket、监听某个端口、创建流等 等。容器知道自己与web服务器之间的协议，所以你的servlet不用担心web服务器（如Apache）和你自己的web代码之间的API，只需要考 虑如何在servlet中实现业务逻辑（如处理一个订单）。</li>
+<li>生命周期管理：servlet容器控制着servlet的生与死，它负责加载类、实例化和初始化servlet，调用servlet方法，以及使servlet实例被垃圾回收，有了servlet容器，你不需要太多的考虑资源管理。</li>
+<li>多线程支持：容器会自动为它所接收的每个servlet请求创建一个新的java线程。针对用户的请求，如果servlet已经运行完相应的http服务方法，这个线程就会结束。这并不是说你不需要考虑线程安全性，其实你还会遇到同步问题，不过这样能使你少做很多工作。</li>
+<li>声明方式实现安全：利用servlet容器，你可以使用xml部署描述文件来配置和修改安全性，而不必将其硬编码写到servlet类代码中。</li>
+<li>JSP支持：servlet容器负责将jsp代码翻译为真正的java代码。</li>
+</ul>
+<h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><blockquote>
+<ol>
+<li><p>客户端（通常都是浏览器）访问Web服务器，发送HTTP请求。</p>
+</li>
+<li><p>Web服务器接收到请求后，传递给Servlet容器。</p>
+</li>
+<li><p>Servlet容器加载Servlet，产生Servlet实例后，向其传递表示请求和响应的对象。</p>
+</li>
+<li><p>Servlet实例使用请求对象得到客户端的请求信息，然后进行相应的处理。</p>
+</li>
+<li><p>Servlet实例将处理结果通过响应对象发送回客户端，容器负责确保响应正确送出，同时将控制返回给Web服务器。</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h4><p>web.xml文件是Java web项目中的一个配置文件，主要用于配置欢迎页、Filter、Listener、Servlet等，但并不是必须的，一个java web项目没有web.xml文件照样能跑起来。Tomcat容器<code>/conf</code>目录下也有作用于全局web应用web.xml文件，当一个web项目要启动时，Tomcat会首先加载项目中的web.xml文件，然后通过其中的配置来启动项目，只有配置的各项没有错误时，项目才能正常启动。</p>
+<h4 id="管理界面"><a href="#管理界面" class="headerlink" title="管理界面"></a>管理界面</h4><img src="/web/tomcat/1.png" class="">
+
+<p>右边的按钮Server Status,Manager App,Host Manager分别表示进入服务器状态，管理服务器上部署的应用，管理主机界面。</p>
+<ul>
+<li>Server Status 服务器状态管理，路径为<code>/manager/status</code></li>
+</ul>
+<img src="/web/tomcat/2.png" class="">
+
+<ul>
+<li>Manager App 管理服务器上部署的应用，路径为<code>/manager/html</code></li>
+</ul>
+<img src="/web/tomcat/3.png" class="">
+
+<p>在这里可以管理服务器上部署的应用，页面上有start,stop按钮可以启动和关闭web project；还可以进行项目部署，上传项目。</p>
+<ul>
+<li>Host Manager 管理主机界面。</li>
+</ul>
+<h1 id="0x04-JSP"><a href="#0x04-JSP" class="headerlink" title="0x04 JSP"></a>0x04 JSP</h1><p>JSP全称Java Server Page，直译就是“运行在服务器端的页面”。我们可以直接在JSP文件里写HTML代码，使用上把它<strong>当做</strong>HTML文件。并且JSP中HTML/CSS/JS等的写法和HTML文件中的写法是一模一样的。我们可以把Java代码内嵌在JSP页面中，很方便地把动态数据渲染成静态页面。</p>
+<p>当有人请求JSP时，服务器内部会经历一次动态资源（JSP）到静态资源（HTML）的转化，服务器会自动帮我们把JSP中的HTML片段和数据拼接成静态资源响应给浏览器。也就是说JSP运行在服务器端，但最终发给客户端的都已经是转换好的HTML静态页面（在响应体里）。<strong>服务器并没有把JSP文件发给浏览器</strong>。</p>
+<p>太难了，我直接看晕了，下次有缘再把具体的实现看一下吧qaq</p>
+<h1 id="0x05-WAR包"><a href="#0x05-WAR包" class="headerlink" title="0x05 WAR包"></a>0x05 WAR包</h1><p>WAR（Web Archive file）是网络应用程序文件，它允许将许多文件组合成一个压缩文件。War专用于Web方面。大部分的JAVA WEB工程，都是打成WAR包进行发布的。</p>
+<p>War是一个web模块，其中需要包括WEB-INF，是可以直接运行的WEB模块。通常用于网站，打成包部署到容器中，以tomcat来说，将war文件包放置它的\webapps\目录下，启动Tomcat时，这个包可以自动进行解压。</p>
+<img src="/web/tomcat/4.png" class="">
+
+<p>上图是一个基本的war包的目录结构。<a href="https://www.jianshu.com/p/ad644c5b6426" target="_blank" rel="noopener">这篇文章</a>把WAR包的文件交互原理解释得比较清楚。</p>
+<h1 id="0x06-总结"><a href="#0x06-总结" class="headerlink" title="0x06 总结"></a>0x06 总结</h1><p>看了一下午，我发现还是能够理解一点，但由于我对服务架构不太熟悉，也不懂java，所以很多知识都没有能很好的理解。所以以后看的多了再来魔改下这篇文章吧qaq，目前我想知道的已经学到了。拜拜！</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Neorah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://neorah.me/web/tomcat/">https://neorah.me/web/tomcat/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a> 许可协议。转载请注明来自 <a href="https://neorah.me">Neorah's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java-Servlet/">Java Servlet</a><a class="post-meta__tags" href="/tags/Apache-Tomcat/">Apache Tomcat</a><a class="post-meta__tags" href="/tags/JSP/">JSP</a><a class="post-meta__tags" href="/tags/WAR/">WAR</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/mycat/"><i class="fa fa-chevron-left">  </i><span>绝美十一宝贝高清美图</span></a></div><div class="next-post pull-right"><a href="/ctf/RCTF2015/"><span>[RCTF2015]EasySQL</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/top.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By Neorah</div><div class="footer_custom_text">Theme By melody</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
