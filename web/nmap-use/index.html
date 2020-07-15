@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="nmap常用命令记录"><meta name="keywords" content="nmap"><meta name="author" content="Neorah"><meta name="copyright" content="Neorah"><title>nmap常用命令记录 | Neorah's Blog</title><link rel="shortcut icon" href="/img/melody-favicon32.ico"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.css"><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.1.1/dist/instantsearch.min.js" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: {"appId":"DBINOT6FYU","apiKey":"c8bb9d887053d084aa4aee885c26cac5","indexName":"dev_Neorah","hits":{"per_page":10},"languages":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}.","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#不介绍了"><span class="toc-number">1.</span> <span class="toc-text">不介绍了</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分类及状态"><span class="toc-number">2.</span> <span class="toc-text">分类及状态</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#端口分类"><span class="toc-number">2.1.</span> <span class="toc-text">端口分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#端口状态"><span class="toc-number">2.2.</span> <span class="toc-text">端口状态</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本主机扫描"><span class="toc-number">3.</span> <span class="toc-text">基本主机扫描</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#扫描单台主机"><span class="toc-number">3.1.</span> <span class="toc-text">扫描单台主机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扫描多台主机"><span class="toc-number">3.2.</span> <span class="toc-text">扫描多台主机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扫描列表里的多台主机"><span class="toc-number">3.3.</span> <span class="toc-text">扫描列表里的多台主机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常用选项"><span class="toc-number">4.</span> <span class="toc-text">常用选项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#扫描类型"><span class="toc-number">5.</span> <span class="toc-text">扫描类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP"><span class="toc-number">5.1.</span> <span class="toc-text">TCP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP"><span class="toc-number">5.2.</span> <span class="toc-text">UDP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#脚本引擎"><span class="toc-number">6.</span> <span class="toc-text">脚本引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用法举例"><span class="toc-number">6.1.</span> <span class="toc-text">用法举例</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/neorah.jpg"></div><div class="author-info__name text-center">Neorah</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/Neorah" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">35</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">35</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">34</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/top.JPG)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Neorah's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Posts</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> Search</span></a></span></div><div id="post-info"><div id="post-title">nmap常用命令记录</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-15</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/%E5%B7%A5%E5%85%B7/">工具</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">2.7k</span><span class="post-meta__separator">|</span><span>Reading time: 10 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="不介绍了"><a href="#不介绍了" class="headerlink" title="不介绍了"></a>不介绍了</h1><p>详细见：<a href="https://nmap.org/" target="_blank" rel="noopener">https://nmap.org/</a></p>
+<h1 id="分类及状态"><a href="#分类及状态" class="headerlink" title="分类及状态"></a>分类及状态</h1><h2 id="端口分类"><a href="#端口分类" class="headerlink" title="端口分类"></a>端口分类</h2><ul>
+<li><p>公认端口（well-known port）：从0至1024，最常用端口，通常与协议绑定；</p>
+</li>
+<li><p>注册端口（registered port）：从1025至49151，这些端口已经注册到服务协议上；</p>
+</li>
+<li><p>动态或私有端口（dynamic/private port）：从49152至65535。</p>
+</li>
+</ul>
+<blockquote>
+<p> 另外，端口还与协议相关；比如：UDP端口53通常用于DNS查询、TCP端口53通常用于DNS记录迁移。</p>
+</blockquote>
+<h2 id="端口状态"><a href="#端口状态" class="headerlink" title="端口状态"></a>端口状态</h2><ul>
+<li>open：目标端口开启。</li>
+<li>closed：目标端口关闭。</li>
+<li>filtered：通常被防火墙拦截，无法判断目标端口开启与否。</li>
+<li>unfiltered：目标端口可以访问，但无法判断开启与否。</li>
+<li>open | filtered：无法确定端口是开启还是filtered。</li>
+<li>closed | filtered：无法确定端口是关闭还是filtered。</li>
+</ul>
+<h1 id="基本主机扫描"><a href="#基本主机扫描" class="headerlink" title="基本主机扫描"></a>基本主机扫描</h1><h2 id="扫描单台主机"><a href="#扫描单台主机" class="headerlink" title="扫描单台主机"></a>扫描单台主机</h2><p>Nmap 默认发送一个arp的ping数据包来探测目标主机在1-10000范围内所开放的端口。</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap ip（域名）</span><br></pre></td></tr></table></figure>
+
+<p>输出为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ffeb1523ca2b:~# nmap xxx</span><br><span class="line">Starting Nmap 7.80 ( https:&#x2F;&#x2F;nmap.org ) at 2020-07-15 06:24 UTC</span><br><span class="line">Nmap scan report for xxx</span><br><span class="line">Host is up (0.015s latency).</span><br><span class="line">Not shown: 499 closed ports, 499 filtered ports</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">80&#x2F;tcp   open  http</span><br><span class="line">8000&#x2F;tcp open  http-alt</span><br></pre></td></tr></table></figure>
+
+<p>加上<code>-v</code>会有更详细的输出：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ffeb1523ca2b:~# nmap -v &lt;target ip&gt;</span><br><span class="line">Starting Nmap 7.80 ( https:&#x2F;&#x2F;nmap.org ) at 2020-07-15 06:51 UTC</span><br><span class="line">Initiating Ping Scan at 06:51</span><br><span class="line">Scanning &lt;target ip&gt; [4 ports]</span><br><span class="line">Completed Ping Scan at 06:51, 0.03s elapsed (1 total hosts)</span><br><span class="line">Initiating Parallel DNS resolution of 1 host. at 06:51</span><br><span class="line">Completed Parallel DNS resolution of 1 host. at 06:51, 0.02s elapsed</span><br><span class="line">Initiating SYN Stealth Scan at 06:51</span><br><span class="line">Scanning &lt;target ip&gt; [1000 ports]</span><br><span class="line">Discovered open port 80&#x2F;tcp on xxx</span><br><span class="line">Completed SYN Stealth Scan at 06:51, 4.25s elapsed (1000 total ports)</span><br><span class="line">Nmap scan report for xxx</span><br><span class="line">Host is up (0.0028s latency).</span><br><span class="line">Not shown: 999 filtered ports</span><br><span class="line">PORT   STATE SERVICE</span><br><span class="line">80&#x2F;tcp open  http</span><br><span class="line"></span><br><span class="line">Read data files from: &#x2F;usr&#x2F;bin&#x2F;..&#x2F;share&#x2F;nmap</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 4.39 seconds</span><br><span class="line">           Raw packets sent: 2006 (88.228KB) | Rcvd: 7 (284B)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="扫描多台主机"><a href="#扫描多台主机" class="headerlink" title="扫描多台主机"></a>扫描多台主机</h2><p>直接将主机名放进nmap参数中即可</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap sisa.tencent.com careers.tencent.com cp.tencent.com</span><br></pre></td></tr></table></figure>
+
+<p>输出为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ffeb1523ca2b:~# nmap sisa.tencent.com careers.tencent.com cp.tencent.com</span><br><span class="line">Starting Nmap 7.80 ( https:&#x2F;&#x2F;nmap.org ) at 2020-07-15 06:55 UTC</span><br><span class="line">Nmap scan report for sisa.tencent.com (183.3.235.175)</span><br><span class="line">Host is up (0.0030s latency).</span><br><span class="line">Not shown: 998 filtered ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">80&#x2F;tcp  open  http</span><br><span class="line">443&#x2F;tcp open  https</span><br><span class="line"></span><br><span class="line">Nmap scan report for careers.tencent.com (212.64.46.90)</span><br><span class="line">Host is up (0.0029s latency).</span><br><span class="line">Not shown: 998 filtered ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">80&#x2F;tcp  open  http</span><br><span class="line">443&#x2F;tcp open  https</span><br><span class="line"></span><br><span class="line">Nmap scan report for cp.tencent.com (113.96.232.125)</span><br><span class="line">Host is up (0.0029s latency).</span><br><span class="line">Not shown: 998 filtered ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">80&#x2F;tcp  open  http</span><br><span class="line">443&#x2F;tcp open  https</span><br><span class="line"></span><br><span class="line">Nmap done: 3 IP addresses (3 hosts up) scanned in 10.12 seconds</span><br></pre></td></tr></table></figure>
+
+<p>也可以*表示，扫描整个子网域</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap 192.168.0.*</span><br></pre></td></tr></table></figure>
+
+<p>或者用以下也可以达到同样的效果。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap 192.168.0.0&#x2F;24</span><br></pre></td></tr></table></figure>
+
+<p>增加端口和网段：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap  -p 22,21,80 192.168.31.13</span><br><span class="line"></span><br><span class="line">nmap  -p 22,21,80 192.168.31.1-253</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="扫描列表里的多台主机"><a href="#扫描列表里的多台主机" class="headerlink" title="扫描列表里的多台主机"></a>扫描列表里的多台主机</h2><p>在渗透测试中常常要扫描大把子域名，以之前对tencent.com的信息收集为例</p>
+<img src="/web/nmap-use/1.png" class="">
+
+<p>就可以利用以下命令进行获取文件内容扫描</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap -iL tencent_result.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h1><ol>
+<li><p>猜测匹配操作系统（-O）,识别目标主机的操作系统。</p>
+</li>
+<li><p>服务版本识别（-sV），Nmap可以在进行端口扫描的时候检测服务端软件的版本信息。版本信息将使后续的漏洞识别工作更有针对性。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ffeb1523ca2b:~# nmap -sV xxx</span><br><span class="line">Starting Nmap 7.80 ( https:&#x2F;&#x2F;nmap.org ) at 2020-07-15 06:26 UTC</span><br><span class="line">Nmap scan report for 192.168.1.102</span><br><span class="line">Host is up (0.0047s latency).</span><br><span class="line">Not shown: 998 closed ports</span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">80&#x2F;tcp   open  http    nginx 1.19.0</span><br><span class="line">8000&#x2F;tcp open  http    Apache httpd 2.4.25 ((Debian))</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>禁用主机检测（-Pn），如果主机屏蔽了ping请求，Nmap可能会认为该主机没有开机。这将使得Nmap无法进行进一 步检测，比如端口扫描、服务版本识别和操作系统识别等探测工作。因此可能需要禁用Nmap的主机检测功能。在指定这个选项之后，Nmap会认为目标主机已经开机并会进行全套的检测工作。</p>
+</li>
+<li><p>快速扫描（-F），将仅扫描100个常用端口。</p>
+</li>
+<li><p>强力检测选项（-A），启用-A选项之后，Nmap将检测目标主机的下述信息</p>
+</li>
+</ol>
+<ul>
+<li>服务版本识别（-sV）</li>
+<li>操作系统识别（-O）</li>
+<li>脚本扫描（-sC）</li>
+<li>Traceroute（–traceroute）</li>
+</ul>
+<ol start="6">
+<li><p>输出选项</p>
+<p>nmap支持以下几种输出：</p>
+<ul>
+<li><p>正常输出（-oN）：不显示runtime信息和警告信息。</p>
+</li>
+<li><p>XML文件（-oX）：比较建议。生成的XML格式文件可以转换成HTML，还可被Nmap的图形界面解析，也便于导入数据库。</p>
+</li>
+<li><p>生成便于Grep使用的文件（-oG）：这种格式的文件的内容由注释（由#开始）和信息行组成。信息行包含6个字段，每个字段的字段名称和字段值以冒号分割，字段之间使用制表符隔开，便于 grep或awk之类的UNIX指令整理扫描结果。</p>
+<p>输出示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">root@ffeb1523ca2b:~# cat hhh.php</span><br><span class="line"># Nmap 7.80 scan initiated Wed Jul 15 08:25:08 2020 as: nmap -O -oG hhh.php buuoj.cn</span><br><span class="line">Host: 111.123.50.83 ()	Status: Up</span><br><span class="line">Host: 111.123.50.83 ()	Ports: 80&#x2F;open&#x2F;tcp&#x2F;&#x2F;http&#x2F;&#x2F;&#x2F;, 443&#x2F;open&#x2F;tcp&#x2F;&#x2F;https&#x2F;&#x2F;&#x2F;, 8080&#x2F;open&#x2F;tcp&#x2F;&#x2F;http-proxy&#x2F;&#x2F;&#x2F;, 10002&#x2F;open&#x2F;tcp&#x2F;&#x2F;documentum&#x2F;&#x2F;&#x2F;	Ignored State: filtered (996)	Seq Index: 132	IP ID Seq: Randomized</span><br><span class="line"># Nmap done at Wed Jul 15 08:25:17 2020 -- 1 IP address (1 host up) scanned in 9.97 seconds</span><br></pre></td></tr></table></figure>
+
+<p>由此可见，注释行包含了我们的输入。</p>
+</li>
+<li><p>输出至所有格式（-oA）：包含以上三种格式，分别以<code>.nmap</code>、<code>.xml</code>、<code>.gnmap</code>结尾。</p>
+</li>
+</ul>
+</li>
+<li><p>时间排程控制选项（-T）</p>
+<p>nmap可通过-T选项指定时间排程控制的模式。它有6种扫描模式。</p>
+<ul>
+<li>paranoid（0）：每5分钟发送一次数据包，且不会以并行方式同时发送多组数据。这种模式 的扫描不会被IDS检测到。</li>
+<li>sneaky（1）：每隔15秒发送一个数据包，且不会以并行方式同时发送多组数据。</li>
+<li>polite（2）：每0.4    秒发送一个数据包，且不会以并行方式同时发送多组数据。</li>
+<li>normal（3）：此模式同时向多个目标发送多个数据包，为Nmap默认的模式，该模式能自 动在扫描时间和网络负载之间进行平衡。</li>
+<li>aggressive（4）：在这种模式下，Nmap对每个既定的主机只扫描5分钟，然后扫描下一 台主机。它等待响应的时间不超过1.25秒。</li>
+<li>insane（5）：在这种模式下，Nmap对每个既定的主机仅扫描75秒，然后扫描下一台主机。它等待响应的时间不超过0.3秒。</li>
+</ul>
+</li>
+</ol>
+<h1 id="扫描类型"><a href="#扫描类型" class="headerlink" title="扫描类型"></a>扫描类型</h1><h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><ol>
+<li>-sT</li>
+</ol>
+<p>TCP connect()扫描：指定这个选项后，程序将和目标主机的每个端口都进行完整的三次握手。如果成功建立连接，则判定该端口是开放端口。由于在检测每个端口时都需要进行三次握手，所以这种扫描方式比较慢，而且扫描行为很可能被目标主机记录下来。如果启动 Nmap的用户的权限不足，那么默认情况下Nmap程序将以这种模式进行扫描。</p>
+<ol start="2">
+<li>-sS</li>
+</ol>
+<p>SYN扫描：该选项也称为半开连接或者SYN stealth。采用该选项后，Nmap将使用含有SYN标志位的数据包进行端口探测。如果目标主机回复了SYN/ACK包，则说明该端口处于开放状态：如果回复的是RST/ACK包，则说明这个端口处于关闭状态；如果没有任何响应 或者发送了ICMP unreachable信息，则可认为这个端口被屏蔽了。SYN模式的扫描速度非常 好。而且由于这种模式不会进行三次握手，所以是一种十分隐蔽的扫描方式。如果启动Nmap 的用户有高级别权限，那么在默认情况下Nmap程序将以这种模式进行扫描。</p>
+<ol start="3">
+<li>-sN -sF -sX</li>
+</ol>
+<p>TCP NULL（-sN）、FIN（-sF）及XMAS（-sX）扫描：NULL 扫描不设置任何控制位； FIN扫描仅设置FIN标志位：XMAS扫描设置FIN、PSH和URG的标识位。如果目标主机返回 了含有RST标识位的响应数据，则说明该端口处于关闭状态；如果目标主机没有任何回应， 则该端口处于打开｜过滤状态。</p>
+<ol start="4">
+<li>-sM</li>
+</ol>
+<p>TCP Maimon扫描：Uriel Maimon 首先发现了TCP Maimom扫描方式。这种模式的 探测数据包含有FIN/ACK标识。对于BSD衍生出来的各种操作系统来说，如果被测端口处于 开放状态，主机将会丢弃这种探测数据包；如果被测端口处于关闭状态，那么主机将会回复 RST。</p>
+<ol start="5">
+<li>-sA</li>
+</ol>
+<p>TCPACK扫描：这种扫描模式可以检测目标系统是否采用了数据包状态监测技术 （stateful）防火墙，并能确定哪些端口被防火墙屏蔽。这种类型的数据包只有一个ACK标识位。如果目标主机的回复中含有RST标识，则说明目标主机没有被过滤。</p>
+<ol start="6">
+<li>-sW</li>
+</ol>
+<p>TCP窗口扫描：这种扫描方式检测目标返回的RST数据包的TCP窗口字段。如果目 标端口处于开放状态，这个字段的值将是正值；否则它的值应当是0。</p>
+<ol start="7">
+<li>-sL</li>
+</ol>
+<p>TCP Idle扫描：采用这种技术后，您将通过指定的僵尸主机发送扫描数据包。本机并不与目标主机直接通信。如果对方网络里有IDS，IDS将认为发起扫描的主机是僵尸主机。</p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p>Nmap有多种TCP扫描方式，而UDP扫描仅有一种扫描方式（-sU）。虽然UDP扫描结果没有 TCP扫描结果的可靠度高，但渗透测试人员不能因此而轻视UDP扫描，毕竟UDP端口代表着 可能会有价值的服务端程序。但是UDP扫描的最大问题是性能问题。由干Linux内核限制1秒内最多发送一次ICMP Port Unreachable信息。按照这个速度，对一台主机的65536个UDP端口进行完整扫描，总耗时必 定会超过18个小时。</p>
+<p>算了我看不太懂，要用的时候在官网查就好了，复制粘贴好累哈哈哈哈哈。</p>
+<h1 id="脚本引擎"><a href="#脚本引擎" class="headerlink" title="脚本引擎"></a>脚本引擎</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap --script 类别</span><br></pre></td></tr></table></figure>
+
+<p>官方文档：<a href="https://nmap.org/nsedoc/" target="_blank" rel="noopener">https://nmap.org/nsedoc/</a></p>
+<img src="/web/nmap-use/2.png" class="">
+
+<p>左边为脚本分类，点击分类之后就会看到右边出现很多具体脚本。</p>
+<p>以上的“类别”可以为脚本分类及类别里的具体脚本。</p>
+<h2 id="用法举例"><a href="#用法举例" class="headerlink" title="用法举例"></a>用法举例</h2><p>扫描服务器的常见漏洞</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap --script vuln &lt;target&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.freebuf.com/news/141607.html" target="_blank" rel="noopener">这里</a>有好多例子</p>
+<p>好了基本用法就以上这些了！想记录好久了一直都鸽了 这次可算完成了！</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Neorah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://neorah.me/web/nmap-use/">https://neorah.me/web/nmap-use/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener">CC BY-NC-SA 3.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/nmap/">nmap</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/ctf/buuctf2018/"><span>buuctf2018 OnlineTools</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(/img/top.JPG)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By Neorah</div><div class="footer_custom_text">Theme By melody</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/algolia.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="algolia-search"><div class="search-dialog__title" id="algolia-search-title">Algolia</div><div id="algolia-input-panel"><div id="algolia-search-input"></div></div><hr><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-stats"></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
